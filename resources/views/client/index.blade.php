@@ -6,6 +6,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="image" />
+                <input type="submit" value="Upload" />
+            </form>
         </div>
     </div>
 </div>

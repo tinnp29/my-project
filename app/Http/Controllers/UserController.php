@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -97,5 +98,23 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function uploadAvatar(Request $request)
+    {
+        // if has file
+        if ($request->hasFile('image')) {
+            $filename = $request->image->getClientOriginalName();
+
+            // if image exists, replace new image
+            if (auth()->user()->avatar) {
+                Storage::delete('/public/images/' . auth()->user()->avatar);
+            }
+
+            $request->image->storeAs('images', $filename, 'public');
+            auth()->user()->update(['avatar' => $filename]);
+        }
+
+        return redirect()->back();
     }
 }

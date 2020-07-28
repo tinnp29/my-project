@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('page_title', 'Hoa Mặt Trời')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -18,6 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/custom.css') }}" rel="stylesheet">
+
+    <!-- Logo Title-->
+    <link rel="icon" href="{{ asset('images/sunflower.svg') }}">
 </head>
 <body>
     <div id="app">
@@ -50,7 +54,8 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="display: flex; align-items: center;">
+                                    <div class="avatar" style="background-image: url('{{ asset('/storage/images/'. Auth::user()->avatar) }}'); width: 40px; height: 40px; background-position: contain; background-repeat: no-repeat; background-size: cover; border-radius: 50%;"></div>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -75,6 +80,8 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        @include('client.partials.footer')
     </div>
 </body>
 </html>
